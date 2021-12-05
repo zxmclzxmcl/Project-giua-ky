@@ -12,8 +12,8 @@
    <children>
       <TableView fx:id="table1" layoutX="36.0" layoutY="74.0" onMouseClicked="#getSelected1" prefHeight="430.0" prefWidth="933.0">
         <columns>
-          <TableColumn fx:id="name1Column" prefWidth="140.7999849319458" text="Name" />
-          <TableColumn fx:id="workunit1Column" prefWidth="127.99998474121094" text="Unit" />
+            <TableColumn fx:id="name1Column" prefWidth="140.7999849319458" text="Name" />
+            <TableColumn fx:id="workunit1Column" prefWidth="127.99998474121094" text="Unit" />
             <TableColumn fx:id="basicsal1Column" prefWidth="120.79998779296875" text="Coefficient Salary" />
             <TableColumn fx:id="bonussal1Column" prefWidth="130.39996337890625" text="Bonus Salary" />
             <TableColumn fx:id="workingdayColumn" prefWidth="152.0" text="Lessons / Working days" />

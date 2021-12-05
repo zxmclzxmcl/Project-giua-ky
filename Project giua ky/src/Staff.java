@@ -15,8 +15,8 @@ public class Staff {
         this.categori1 = categori1;
     }
     
-    public Staff(){
-    }
+    public Staff(){}
+
     public String getName1(){
         return name1;
     }
