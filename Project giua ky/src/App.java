@@ -21,7 +21,9 @@ public class App extends Application
         
         //set the title of the window
         window.setTitle("Staff Management Program");
+        //set the initial scene
         window.setScene(scene);
+        //show the window
         window.show();
     }
 

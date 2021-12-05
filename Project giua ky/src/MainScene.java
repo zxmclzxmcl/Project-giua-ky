@@ -21,8 +21,11 @@ import javafx.stage.*;
 
 public class MainScene implements Initializable{
     @FXML
+    //declare a table view for Staff object
     private TableView<Staff> table1;
 
+    /* For each and every column, declare a TableColumn<Class_name,Attribute_datatype>
+    this will create a column for a property each */
     @FXML
     private TableColumn<Staff, Integer> workingdayColumn;
     
@@ -44,11 +47,15 @@ public class MainScene implements Initializable{
     @FXML
     private TableColumn<Staff, String> categoriColumn;
 
+    /* Create an ObservabelList<Class_name> object, this will act as a List that 
+    store the object of the Class, including its attribute and method */
     private ObservableList<Staff> staffList;
+    
     int index = -1;
     int n=0;
     int m=0;
     
+    //in the GUI, TextField will be the place you input your data
     @FXML
     private TextField daysText;
 
