@@ -52,8 +52,6 @@ public class MainScene implements Initializable{
     private ObservableList<Staff> staffList;
     
     int index = -1;
-    int n=0;
-    int m=0;
     
     //in the GUI, TextField will be the place you input your data
     @FXML
@@ -97,12 +95,19 @@ public class MainScene implements Initializable{
         );
 
         name1Column.setCellValueFactory(new PropertyValueFactory<Staff, String>("name1"));
+        
         workunit1Column.setCellValueFactory(new PropertyValueFactory<Staff, String>("worku1"));
+        
         basicsal1Column.setCellValueFactory(new PropertyValueFactory<Staff, Double>("basic1"));
+        
         bonussal1Column.setCellValueFactory(new PropertyValueFactory<Staff, Double>("bonus1"));
+        
         workingdayColumn.setCellValueFactory(new PropertyValueFactory<Staff, Integer>("day1"));
+        
         salarycolumn.setCellValueFactory(new PropertyValueFactory<Staff, Double>("salary"));
+        
         categoriColumn.setCellValueFactory(new PropertyValueFactory<Staff, String>("categori1"));
+        
         table1.setItems(staffList);
 
         //huong dan search bar https://www.youtube.com/watch?v=FeTrcNBVWtg&t=541s
@@ -154,11 +159,9 @@ public class MainScene implements Initializable{
                 
             });
         });
-        
         SortedList<Staff> sortedData = new SortedList<>(filteredData);
         sortedData.comparatorProperty().bind(table1.comparatorProperty());
         table1.setItems(sortedData);
-
 
     }
 
@@ -174,7 +177,7 @@ public class MainScene implements Initializable{
         newStaff.setSalary(money1);
         newStaff.setCategori1("Teacher");
         staffList.add(newStaff);
-        n++;
+      
     }
 
     public void addStaff (ActionEvent e)
@@ -189,7 +192,6 @@ public class MainScene implements Initializable{
         newStaff.setSalary(money2);
         newStaff.setCategori1("Staff");
         staffList.add(newStaff);
-        m++;
     }
 
     public void delete (ActionEvent e)
