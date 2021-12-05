@@ -110,33 +110,33 @@ public class MainScene implements Initializable{
         
         table1.setItems(staffList);
 
-        //huong dan search bar https://www.youtube.com/watch?v=FeTrcNBVWtg&t=541s
-
+        //wrap the whole ObservableList inside a FilteredList object,initialy keeping the list
         FilteredList<Staff> filteredData = new FilteredList<>(staffList, b -> true);
 
+        //set the filter predicate whenever there is change in the search textfield
         searchName.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(Staff ->{
+            filteredData.setPredicate(staff ->{
                 if(newValue == null|| newValue.isEmpty()){
-                    return true;
+                    return true; //keeping the list the way it is
                 }
                 String lowerCaseFilter = newValue.toLowerCase();
 
-                if (Staff.getName1().toLowerCase().indexOf(lowerCaseFilter) != -1){
-                    return true;
+                if (staff.getName1().toLowerCase().indexOf(lowerCaseFilter) != -1){
+                    return true; //only the found are in the table view
                 }
                 else
-                return false;
+                return false; // nothing will be appeared
                 
             });
         });
         searchWorku.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(Staff ->{
+            filteredData.setPredicate(staff ->{
                 if(newValue == null|| newValue.isEmpty()){
                     return true;
                 }
                 String lowerCaseFilter = newValue.toLowerCase();
 
-                if (Staff.getWorku1().toLowerCase().indexOf(lowerCaseFilter) != -1){
+                if (staff.getWorku1().toLowerCase().indexOf(lowerCaseFilter) != -1){
                     return true;
                 }
                 else
@@ -145,13 +145,13 @@ public class MainScene implements Initializable{
             });
         });
         searchCoeffi.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(Staff ->{
+            filteredData.setPredicate(staff ->{
                 if(newValue == null|| newValue.isEmpty()){
                     return true;
                 }
                 String lowerCaseFilter = newValue.toLowerCase();
 
-                if (String.valueOf(Staff.getBasic1()).indexOf(lowerCaseFilter) != -1){
+                if (String.valueOf(staff.getBasic1()).indexOf(lowerCaseFilter) != -1){
                     return true;
                 }
                 else
@@ -159,8 +159,14 @@ public class MainScene implements Initializable{
                 
             });
         });
+
+        //wrap the FilteredList inside SortedList, help sorted out the object
         SortedList<Staff> sortedData = new SortedList<>(filteredData);
+
+        //compare to the table, and bind both comparator
         sortedData.comparatorProperty().bind(table1.comparatorProperty());
+
+        //add sorted and filtered data to the table
         table1.setItems(sortedData);
 
     }
