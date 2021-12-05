@@ -87,6 +87,8 @@ public class MainScene implements Initializable{
     private TextField searchWorku;
 
     @Override
+    /* This method is gonna be called whenever the view load : App.java 
+    line 18 */
     public void initialize(URL location, ResourceBundle resources)
     {
         staffList = FXCollections.observableArrayList(
@@ -152,6 +154,7 @@ public class MainScene implements Initializable{
                 
             });
         });
+        
         SortedList<Staff> sortedData = new SortedList<>(filteredData);
         sortedData.comparatorProperty().bind(table1.comparatorProperty());
         table1.setItems(sortedData);
