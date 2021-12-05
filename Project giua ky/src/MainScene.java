@@ -15,6 +15,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.*;
 
@@ -109,6 +110,14 @@ public class MainScene implements Initializable{
         categoriColumn.setCellValueFactory(new PropertyValueFactory<Staff, String>("categori1"));
         
         table1.setItems(staffList);
+        //set the table editable
+        table1.setEditable(true);
+
+        name1Column.setCellFactory(TextFieldTableCell.forTableColumn());
+        name1Column.setOnEditCommit(event ->{
+            Staff newStaff = event.getRowValue();
+            newStaff.setName1(event.getNewValue());
+        });
 
         //wrap the whole ObservableList inside a FilteredList object,initialy keeping the list
         FilteredList<Staff> filteredData = new FilteredList<>(staffList, b -> true);
