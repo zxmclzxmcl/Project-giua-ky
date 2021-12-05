@@ -7,17 +7,26 @@ import javafx.stage.Stage;
  
 public class App extends Application 
 {
+    Stage window;
     @Override
-    public void start(Stage stage) throws Exception {
+    //this method will be called when lauch
+    public void start(Stage primaryStage) throws Exception {
+
+        window = primaryStage;
+        
+        //import the scene design from the Tableview.fxml
         Parent root = FXMLLoader.load(getClass().getResource("Tableview.fxml"));
+        //created a new scene using the constructor
         Scene scene = new Scene(root);
         
-        stage.setTitle("Staff Management Program");
-        stage.setScene(scene);
-        stage.show();
+        //set the title of the window
+        window.setTitle("Staff Management Program");
+        window.setScene(scene);
+        window.show();
     }
 
     public static void main(String[] args) {
+        //this method will jump to the start method above
         launch(args);
     }
 }
