@@ -14,10 +14,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.*;
+import javafx.util.converter.DoubleStringConverter;
+import javafx.util.converter.IntegerStringConverter;
 
 
 public class MainScene implements Initializable{
@@ -43,7 +46,7 @@ public class MainScene implements Initializable{
     private TableColumn<Staff, Double> bonussal1Column;
 
     @FXML
-    private TableColumn<Staff, Double> salarycolumn;
+    private TableColumn<Staff, Double> salaryColumn;
 
     @FXML
     private TableColumn<Staff, String> categoriColumn;
@@ -105,7 +108,7 @@ public class MainScene implements Initializable{
         
         workingdayColumn.setCellValueFactory(new PropertyValueFactory<Staff, Integer>("day1"));
         
-        salarycolumn.setCellValueFactory(new PropertyValueFactory<Staff, Double>("salary"));
+        salaryColumn.setCellValueFactory(new PropertyValueFactory<Staff, Double>("salary"));
         
         categoriColumn.setCellValueFactory(new PropertyValueFactory<Staff, String>("categori1"));
         
@@ -113,11 +116,86 @@ public class MainScene implements Initializable{
         //set the table editable
         table1.setEditable(true);
 
+        //this will allow the cell have a textfield for change
         name1Column.setCellFactory(TextFieldTableCell.forTableColumn());
-        name1Column.setOnEditCommit(event ->{
-            Staff newStaff = event.getRowValue();
-            newStaff.setName1(event.getNewValue());
+        workunit1Column.setCellFactory(TextFieldTableCell.forTableColumn());
+        //for the double, integer attribute be converted
+        basicsal1Column.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+        bonussal1Column.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+        workingdayColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+
+        //when hit enter after edit, this program will run
+        name1Column.setOnEditCommit( event ->{
+            //introduce an choice box, with yes and no button
+            boolean choice = AppearBox.choice("Edit alert", "Are you sure, this won't be undoable");
+            if(choice)
+            {   
+                //if choose yes, this code will run 
+                //get the data to object
+                Staff newStaff = event.getRowValue();
+                newStaff.setName1(event.getNewValue());
+                //refresh when done
+                table1.refresh();
+            }
+            else 
+                //when the user hit No button
+                //allow the user to see the unchanged right away
+                table1.refresh();
+
         });
+
+        workunit1Column.setOnEditCommit( event ->{ 
+
+            boolean choice = AppearBox.choice("Edit alert", "Are you sure, this won't be undoable");
+            if(choice){   
+                
+                Staff newStaff = event.getRowValue();
+                newStaff.setWorku1(event.getNewValue());
+                table1.refresh();
+            }
+            else 
+                table1.refresh();
+        });
+
+        basicsal1Column.setOnEditCommit( event ->{ 
+
+            boolean choice = AppearBox.choice("Edit alert", "Are you sure, this won't be undoable");
+            if(choice){   
+                
+                Staff newStaff = event.getRowValue();
+                newStaff.setBasic1(event.getNewValue());
+                table1.refresh();
+            }
+            else 
+                table1.refresh();
+        });
+
+       basicsal1Column.setOnEditCommit( event ->{ 
+
+            boolean choice = AppearBox.choice("Edit alert", "Are you sure, this won't be undoable");
+            if(choice){   
+                
+                Staff newStaff = event.getRowValue();
+                newStaff.setBonus1(event.getNewValue());
+                table1.refresh();
+            }
+            else 
+                table1.refresh();
+        });
+
+        workingdayColumn.setOnEditCommit( event ->{ 
+
+            boolean choice = AppearBox.choice("Edit alert", "Are you sure, this won't be undoable");
+            if(choice){   
+                
+                Staff newStaff = event.getRowValue();
+                newStaff.setDay1(event.getNewValue());
+                table1.refresh();
+            }
+            else 
+                table1.refresh();
+        });
+
 
         //wrap the whole ObservableList inside a FilteredList object,initialy keeping the list
         FilteredList<Staff> filteredData = new FilteredList<>(staffList, b -> true);
@@ -192,7 +270,7 @@ public class MainScene implements Initializable{
         newStaff.setSalary(money1);
         newStaff.setCategori1("Teacher");
         staffList.add(newStaff);
-      
+        
     }
 
     public void addStaff (ActionEvent e)

@@ -17,7 +17,7 @@
             <TableColumn fx:id="basicsal1Column" prefWidth="120.79998779296875" text="Coefficient Salary" />
             <TableColumn fx:id="bonussal1Column" prefWidth="130.39996337890625" text="Bonus Salary" />
             <TableColumn fx:id="workingdayColumn" prefWidth="152.0" text="Lessons / Working days" />
-            <TableColumn fx:id="salarycolumn" prefWidth="159.199951171875" text="Salary" />
+            <TableColumn fx:id="salaryColumn" prefWidth="159.199951171875" text="Salary" />
             <TableColumn fx:id="categoriColumn" prefWidth="101.60003662109375" text="Categorization" />
         </columns>
       </TableView>
