@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#clearSelected1" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="1230.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainScene">
+   <children>
+      <TableView fx:id="table1" layoutX="36.0" layoutY="74.0" onMouseClicked="#getSelected1" prefHeight="430.0" prefWidth="933.0">
+        <columns>
+          <TableColumn fx:id="name1Column" prefWidth="140.7999849319458" text="Name" />
+          <TableColumn fx:id="workunit1Column" prefWidth="127.99998474121094" text="Unit" />
+            <TableColumn fx:id="basicsal1Column" prefWidth="120.79998779296875" text="Coefficient Salary" />
+            <TableColumn fx:id="bonussal1Column" prefWidth="130.39996337890625" text="Bonus Salary" />
+            <TableColumn fx:id="workingdayColumn" prefWidth="152.0" text="Lessons / Working days" />
+            <TableColumn fx:id="salarycolumn" prefWidth="159.199951171875" text="Salary" />
+            <TableColumn fx:id="categoriColumn" prefWidth="101.60003662109375" text="Categorization" />
+        </columns>
+      </TableView>
+      <TextField fx:id="nameText" layoutX="1007.0" layoutY="90.0" prefHeight="26.0" prefWidth="150.0" promptText="Name" />
+      <TextField fx:id="daysText" layoutX="1007.0" layoutY="349.0" promptText="Working days/Teaching days" />
+      <TextField fx:id="workunitText" layoutX="1007.0" layoutY="153.0" promptText="Work Unit" />
+      <TextField fx:id="basicsalText" layoutX="1007.0" layoutY="217.0" promptText="Coefficient Salary" />
+      <TextField fx:id="bonussalText" layoutX="1007.0" layoutY="276.0" promptText="Bonus Salary" />
+      <Button alignment="CENTER" layoutX="972.0" layoutY="569.0" mnemonicParsing="false" onAction="#delete" prefHeight="32.0" prefWidth="122.0" text="Delete information" textAlignment="CENTER" />
+      <Button alignment="CENTER" layoutX="984.0" layoutY="427.0" mnemonicParsing="false" onAction="#addTeacher" text="Teacher" />
+      <Button alignment="CENTER" layoutX="1102.0" layoutY="426.0" mnemonicParsing="false" onAction="#addStaff" prefHeight="26.0" prefWidth="58.0" text="Staff" textAlignment="CENTER" />
+      <Text layoutX="1001.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter Staff's Name">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Text>
+      <Text layoutX="1001.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter Staff's Work Unit">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Text>
+      <Text layoutX="1001.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter Coefficient Salary" wrappingWidth="161.4879150390625">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Text>
+      <Text layoutX="1001.0" layoutY="272.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter Bonus Salary">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Text>
+      <Text layoutX="1001.0" layoutY="330.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter number of Teaching lessions / Working days" wrappingWidth="206.3585205078125">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Text>
+      <Text layoutX="1001.0" layoutY="404.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose Staff Catergorizing">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Text>
+      <Text layoutX="295.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="STAFF'S IMFORMATION  TABLE" wrappingWidth="235.71636962890625">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Text>
+      <Button alignment="CENTER" layoutX="745.0" layoutY="569.0" mnemonicParsing="false" onAction="#fix" prefHeight="32.0" prefWidth="122.0" text="Fix information" textAlignment="CENTER" />
+      <Text layoutX="820.0" layoutY="539.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select action you want to take " textAlignment="CENTER" wrappingWidth="206.3585205078125">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Text>
+      <Button alignment="CENTER" layoutX="745.0" layoutY="632.0" mnemonicParsing="false" onAction="#gonext" prefHeight="32.0" prefWidth="122.0" text="Listing staff' salary" textAlignment="CENTER" />
+      <Button alignment="CENTER" layoutX="972.0" layoutY="632.0" mnemonicParsing="false" onAction="#gonext2" prefHeight="32.0" prefWidth="122.0" text="Total staff's salary" textAlignment="CENTER" />
+      <TextField fx:id="searchName" layoutX="36.0" layoutY="606.0" promptText="Name" />
+      <TextField fx:id="searchWorku" layoutX="243.0" layoutY="606.0" promptText="Work unit" />
+      <TextField fx:id="searchCoeffi" layoutX="465.0" layoutY="606.0" promptText="Coefficient Salary" />
+      <Text layoutX="36.0" layoutY="598.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter Staff's Name" wrappingWidth="149.5999999999999">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Text>
+      <Text layoutX="243.0" layoutY="598.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter Staff's Work Unit">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Text>
+      <Text layoutX="465.0" layoutY="598.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter Coefficient Salary" wrappingWidth="161.4879150390625">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Text>
+      <Text layoutX="70.0" layoutY="563.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employee search bar" textAlignment="CENTER" wrappingWidth="494.9367218017578">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
