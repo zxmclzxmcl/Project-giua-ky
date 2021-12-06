@@ -270,6 +270,11 @@ public class MainScene implements Initializable{
         newStaff.setSalary(money1);
         newStaff.setCategori1("Teacher");
         staffList.add(newStaff);
+        nameText.clear();
+        basicsalText.clear();
+        bonussalText.clear();
+        daysText.clear();
+        workunitText.clear();
         
     }
 
@@ -285,6 +290,11 @@ public class MainScene implements Initializable{
         newStaff.setSalary(money2);
         newStaff.setCategori1("Staff");
         staffList.add(newStaff);
+        nameText.clear();
+        basicsalText.clear();
+        bonussalText.clear();
+        daysText.clear();
+        workunitText.clear();
     }
 
     public void delete (ActionEvent e)

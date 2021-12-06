@@ -1,4 +1,3 @@
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -31,4 +30,5 @@ public class App extends Application
         //this method will jump to the start method above
         launch(args);
     }
+
 }
