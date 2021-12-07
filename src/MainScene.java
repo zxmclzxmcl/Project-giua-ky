@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -81,6 +82,10 @@ public class MainScene implements Initializable{
     @FXML
     private TextField searchWorku;
 
+    @FXML
+    //create a choice box for enhanced categorizing
+    ChoiceBox<String> staffCate;
+
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {   //this is for testing only
@@ -100,6 +105,10 @@ public class MainScene implements Initializable{
         
         //set the item: the ObservableList of Staff, for display
         table1.setItems(staffList);
+
+        //set the item for choice box
+        staffCate.getItems().addAll("Teacher", "Staff");
+        staffCate.getSelectionModel().select(0);
 
         //wrap the ObservabelList in a FilteredList, initialy display all data
         FilteredList<Staff> filteredData = new FilteredList<>(staffList, b -> true);
@@ -163,6 +172,37 @@ public class MainScene implements Initializable{
         table1.setItems(sortedData);
 
 
+    }
+
+    // the actual add method
+    public void add (ActionEvent e){
+        
+        Staff newStaff = new Staff();
+
+        // from the value in the TextField, use set method to modify the object
+        newStaff.setName1(nameText.getText());
+        newStaff.setWorku1(workunitText.getText());
+        newStaff.setBasic1(Double.parseDouble(basicsalText.getText()));
+        newStaff.setBonus1(Double.parseDouble(bonussalText.getText()));
+        newStaff.setDay1(Integer.parseInt(daysText.getText()));
+        newStaff.setCategori1(staffCate.getValue());
+        double money;
+        if(newStaff.getCategori1() == "Teacher"){   
+            money = newStaff.getBasic1() * 750000 + newStaff.getBonus1() + newStaff.getDay1() * 45000;
+        }
+        else{
+            money = newStaff.getBasic1() * 750000 + newStaff.getBonus1() + newStaff.getDay1() * 200000;
+        }
+        newStaff.setSalary(money);
+
+        //in the end add the the ObservableList for display
+        staffList.add(newStaff);  
+        //clear the TextField
+        nameText.clear();
+        workunitText.clear();
+        basicsalText.clear();
+        bonussalText.clear();
+        daysText.clear();
     }
 
     //connected to the "Teacher" button, Tableview.fxml:30
@@ -247,6 +287,9 @@ public class MainScene implements Initializable{
         basicsalText.setText(basicsal1Column.getCellData(index).toString());
         bonussalText.setText(bonussal1Column.getCellData(index).toString());
         daysText.setText(workingdayColumn.getCellData(index).toString());
+
+        // dong nay toi them vao 
+        staffCate.setValue(categoriColumn.getCellData(index));
     }
     
     @FXML
