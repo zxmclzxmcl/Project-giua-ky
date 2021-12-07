@@ -21,9 +21,11 @@ import javafx.stage.*;
 
 public class MainScene implements Initializable{
     @FXML
+    //this will declare a table for Staff object
     private TableView<Staff> table1;
 
     @FXML
+    //creat different column display the method
     private TableColumn<Staff, Integer> workingdayColumn;
     
     @FXML
@@ -43,12 +45,12 @@ public class MainScene implements Initializable{
 
     @FXML
     private TableColumn<Staff, String> categoriColumn;
-
+    
+    //create an ObservableList for the Staff object
     private ObservableList<Staff> staffList;
     int index = -1;
-    int n=0;
-    int m=0;
     
+    //create Texfield for user to enter their input
     @FXML
     private TextField daysText;
 
@@ -81,7 +83,7 @@ public class MainScene implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources)
-    {
+    {   //this is for testing only
         staffList = FXCollections.observableArrayList(
                 new Staff( "Chau","Lop 1-A",3, 100000, 45, "Teacher"),
                 new Staff( "Duc","Lop 2-B",4, 200000, 40, "Staff")
@@ -164,7 +166,6 @@ public class MainScene implements Initializable{
         newStaff.setSalary(money1);
         newStaff.setCategori1("Teacher");
         staffList.add(newStaff);
-        n++;
     }
 
     public void addStaff (ActionEvent e)
@@ -179,8 +180,7 @@ public class MainScene implements Initializable{
         newStaff.setSalary(money2);
         newStaff.setCategori1("Staff");
         staffList.add(newStaff);
-        m++;
-    }
+        }
 
     public void delete (ActionEvent e)
     {
