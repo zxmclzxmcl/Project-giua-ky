@@ -89,6 +89,7 @@ public class MainScene implements Initializable{
                 new Staff( "Duc","Lop 2-B",4, 200000, 40, "Staff")
         );
 
+        //link each column data to different attribute of object
         name1Column.setCellValueFactory(new PropertyValueFactory<Staff, String>("name1"));
         workunit1Column.setCellValueFactory(new PropertyValueFactory<Staff, String>("worku1"));
         basicsal1Column.setCellValueFactory(new PropertyValueFactory<Staff, Double>("basic1"));
@@ -96,24 +97,29 @@ public class MainScene implements Initializable{
         workingdayColumn.setCellValueFactory(new PropertyValueFactory<Staff, Integer>("day1"));
         salarycolumn.setCellValueFactory(new PropertyValueFactory<Staff, Double>("salary"));
         categoriColumn.setCellValueFactory(new PropertyValueFactory<Staff, String>("categori1"));
+        
+        //set the item: the ObservableList of Staff, for display
         table1.setItems(staffList);
 
-        //huong dan search bar https://www.youtube.com/watch?v=FeTrcNBVWtg&t=541s
-
+        //wrap the ObservabelList in a FilteredList, initialy display all data
         FilteredList<Staff> filteredData = new FilteredList<>(staffList, b -> true);
 
+        //set the filter predicate whenever there is a change in TextField: searchName
         searchName.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(Staff ->{
+                //if the TextField is empty, display all data
                 if(newValue == null|| newValue.isEmpty()){
                     return true;
                 }
+                //lower case the value for easier searching, this will be temporary
                 String lowerCaseFilter = newValue.toLowerCase();
 
+                //compare the lowercase version of both value (the staff'name and the newValue)
                 if (Staff.getName1().toLowerCase().indexOf(lowerCaseFilter) != -1){
-                    return true;
+                    return true; // if the values are alike, return the data
                 }
                 else
-                return false;
+                return false; // if not, don't return the data
                 
             });
         });
@@ -147,16 +153,24 @@ public class MainScene implements Initializable{
                 
             });
         });
+
+        //wrap the FilteredList in SortedList, this will sort out all the value that are not alike
         SortedList<Staff> sortedData = new SortedList<>(filteredData);
+
+        //bind to the table use the comperator, otherwise, this won't have any effect
         sortedData.comparatorProperty().bind(table1.comparatorProperty());
+        //set item of the table
         table1.setItems(sortedData);
 
 
     }
 
+    //connected to the "Teacher" button, Tableview.fxml:30
     public void addTeacher (ActionEvent e)
     {
         Staff newStaff = new Staff();
+
+        // from the value in the TextField, use set method to modify the object
         newStaff.setName1(nameText.getText());
         newStaff.setWorku1(workunitText.getText());
         newStaff.setBasic1(Double.parseDouble(basicsalText.getText()));
@@ -165,12 +179,22 @@ public class MainScene implements Initializable{
         double money1 = newStaff.getBasic1() * 750000 + newStaff.getBonus1() + newStaff.getDay1() * 45000;
         newStaff.setSalary(money1);
         newStaff.setCategori1("Teacher");
-        staffList.add(newStaff);
+
+        //in the end add the the ObservableList for display
+        staffList.add(newStaff);  
+        //clear the TextField
+        nameText.clear();
+        workunitText.clear();
+        basicsalText.clear();
+        bonussalText.clear();
+        daysText.clear();
     }
 
+    //connected to the staff button, Tableview.fxml: 31
     public void addStaff (ActionEvent e)
     {
         Staff newStaff = new Staff();
+        
         newStaff.setName1(nameText.getText());
         newStaff.setWorku1(workunitText.getText());
         newStaff.setBasic1(Double.parseDouble(basicsalText.getText()));
@@ -179,17 +203,27 @@ public class MainScene implements Initializable{
         double money2 = newStaff.getBasic1() * 750000 + newStaff.getBonus1() + newStaff.getDay1() * 200000;
         newStaff.setSalary(money2);
         newStaff.setCategori1("Staff");
+        
         staffList.add(newStaff);
-        }
 
+        nameText.clear();
+        workunitText.clear();
+        basicsalText.clear();
+        bonussalText.clear();
+        daysText.clear();
+        }
+   
+    // connected to the "Delete Imformation"  button, Tableview.fxml: 29
     public void delete (ActionEvent e)
-    {
+    {   
+        //on selected and after choose the delete button, remove the selected row out of the table 
         Staff selected1 = table1.getSelectionModel().getSelectedItem();
         staffList.remove(selected1);
         table1.getSelectionModel().clearSelection();
     }
     
     @FXML
+    //stop selecting the row when click from the outside
     void clearSelected1(MouseEvent event)
     {
         nameText.clear();
@@ -201,6 +235,7 @@ public class MainScene implements Initializable{
     }
 
     @FXML
+    // choose a row, this will also display all the value into the TextField, allow for fix() method to work
     void getSelected1(MouseEvent event)
     {
         index= table1.getSelectionModel().getSelectedIndex();
@@ -215,6 +250,7 @@ public class MainScene implements Initializable{
     }
     
     @FXML
+    //more explaination in the readme.txt file 
     void fix(ActionEvent event) 
     {
         Staff selected1 = table1.getSelectionModel().getSelectedItem();
@@ -243,22 +279,30 @@ public class MainScene implements Initializable{
         }
     }
 
+    //connected to the "Listing Staff's Salary button", detail at Tableview.fxml:73
+    //jump to the next window
     public void gonext(ActionEvent event) throws IOException {
+        //make a new window
         Stage window = new Stage();
+        //load the fxml design for the new window
         FXMLLoader loading = new FXMLLoader();
         loading.setLocation(getClass().getResource("Caculateview.fxml"));
         Parent root = loading.load();
         Scene scene = new Scene(root);
         
+        //this scene will use SecondScene file as controller
         SecondScene controlScene = loading.getController();
         controlScene.getInfo(staffList);
 
+        //this window won't be close until the user asked to 
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("List of Staff'salary");
         window.setScene(scene);
         window.showAndWait();
     }
-
+    
+    //connected to the "Total staff's salary", detail at Tableview.fxml:74
+    // this method is alike to the previous one 
     public void gonext2(ActionEvent event) throws IOException {
         Stage window = new Stage();
         FXMLLoader loading = new FXMLLoader();
