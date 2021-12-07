@@ -115,7 +115,7 @@ public class MainScene implements Initializable{
 
         //set the filter predicate whenever there is a change in TextField: searchName
         searchName.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(Staff ->{
+            filteredData.setPredicate(staff ->{
                 //if the TextField is empty, display all data
                 if(newValue == null|| newValue.isEmpty()){
                     return true;
@@ -124,7 +124,7 @@ public class MainScene implements Initializable{
                 String lowerCaseFilter = newValue.toLowerCase();
 
                 //compare the lowercase version of both value (the staff'name and the newValue)
-                if (Staff.getName1().toLowerCase().indexOf(lowerCaseFilter) != -1){
+                if (staff.getName1().toLowerCase().indexOf(lowerCaseFilter) != -1){
                     return true; // if the values are alike, return the data
                 }
                 else
@@ -133,13 +133,13 @@ public class MainScene implements Initializable{
             });
         });
         searchWorku.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(Staff ->{
+            filteredData.setPredicate(staff ->{
                 if(newValue == null|| newValue.isEmpty()){
                     return true;
                 }
                 String lowerCaseFilter = newValue.toLowerCase();
 
-                if (Staff.getWorku1().toLowerCase().indexOf(lowerCaseFilter) != -1){
+                if (staff.getWorku1().toLowerCase().indexOf(lowerCaseFilter) != -1){
                     return true;
                 }
                 else
@@ -148,13 +148,13 @@ public class MainScene implements Initializable{
             });
         });
         searchCoeffi.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(Staff ->{
+            filteredData.setPredicate(staff ->{
                 if(newValue == null|| newValue.isEmpty()){
                     return true;
                 }
                 String lowerCaseFilter = newValue.toLowerCase();
 
-                if (String.valueOf(Staff.getBasic1()).indexOf(lowerCaseFilter) != -1){
+                if (String.valueOf(staff.getBasic1()).indexOf(lowerCaseFilter) != -1){
                     return true;
                 }
                 else
@@ -293,7 +293,7 @@ public class MainScene implements Initializable{
     }
     
     @FXML
-    //more explaination in the readme.txt file 
+    //more explaination in the  future readme.txt file 
     void fix(ActionEvent event) 
     {
         Staff selected1 = table1.getSelectionModel().getSelectedItem();
