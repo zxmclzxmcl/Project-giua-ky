@@ -1,15 +1,14 @@
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.stage.Stage;
 import javafx.scene.*;
+import javafx.event.ActionEvent;
 import javafx.scene.control.TextField;
-
+//this class help bring out the total staff salary
 public class ThirdScene implements Initializable {
 
     @FXML
@@ -17,7 +16,6 @@ public class ThirdScene implements Initializable {
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
     }
 
     @FXML
@@ -26,6 +24,7 @@ public class ThirdScene implements Initializable {
         window.close();
     }
 
+    // add the money of each staff into one and bring out
     public void addmoney(ObservableList<Staff> staffList){
         int i;
         Staff person = new Staff();

@@ -14,15 +14,22 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.*;
+import javafx.util.converter.DoubleStringConverter;
+import javafx.util.converter.IntegerStringConverter;
 
 
 public class MainScene implements Initializable{
     @FXML
+    //declare a table view for Staff object
     private TableView<Staff> table1;
 
+    /* For each and every column, declare a TableColumn<Class_name,Attribute_datatype>
+    this will create a column for a property each */
     @FXML
     private TableColumn<Staff, Integer> workingdayColumn;
     
@@ -39,16 +46,18 @@ public class MainScene implements Initializable{
     private TableColumn<Staff, Double> bonussal1Column;
 
     @FXML
-    private TableColumn<Staff, Double> salarycolumn;
+    private TableColumn<Staff, Double> salaryColumn;
 
     @FXML
     private TableColumn<Staff, String> categoriColumn;
 
+    /* Create an ObservabelList<Class_name> object, this will act as a List that 
+    store the object of the Class, including its attribute and method */
     private ObservableList<Staff> staffList;
-    int index = -1;
-    int n=0;
-    int m=0;
     
+    int index = -1;
+    
+    //in the GUI, TextField will be the place you input your data
     @FXML
     private TextField daysText;
 
@@ -80,6 +89,8 @@ public class MainScene implements Initializable{
     private TextField searchWorku;
 
     @Override
+    /* This method is gonna be called whenever the view load : App.java 
+    line 18 */
     public void initialize(URL location, ResourceBundle resources)
     {
         staffList = FXCollections.observableArrayList(
@@ -88,41 +99,131 @@ public class MainScene implements Initializable{
         );
 
         name1Column.setCellValueFactory(new PropertyValueFactory<Staff, String>("name1"));
+        
         workunit1Column.setCellValueFactory(new PropertyValueFactory<Staff, String>("worku1"));
+        
         basicsal1Column.setCellValueFactory(new PropertyValueFactory<Staff, Double>("basic1"));
+        
         bonussal1Column.setCellValueFactory(new PropertyValueFactory<Staff, Double>("bonus1"));
+        
         workingdayColumn.setCellValueFactory(new PropertyValueFactory<Staff, Integer>("day1"));
-        salarycolumn.setCellValueFactory(new PropertyValueFactory<Staff, Double>("salary"));
+        
+        salaryColumn.setCellValueFactory(new PropertyValueFactory<Staff, Double>("salary"));
+        
         categoriColumn.setCellValueFactory(new PropertyValueFactory<Staff, String>("categori1"));
+        
         table1.setItems(staffList);
+        //set the table editable
+        table1.setEditable(true);
 
-        //huong dan search bar https://www.youtube.com/watch?v=FeTrcNBVWtg&t=541s
+        //this will allow the cell have a textfield for change
+        name1Column.setCellFactory(TextFieldTableCell.forTableColumn());
+        workunit1Column.setCellFactory(TextFieldTableCell.forTableColumn());
+        //for the double, integer attribute be converted
+        basicsal1Column.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+        bonussal1Column.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+        workingdayColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 
+        //when hit enter after edit, this program will run
+        name1Column.setOnEditCommit( event ->{
+            //introduce an choice box, with yes and no button
+            boolean choice = AppearBox.choice("Edit alert", "Are you sure, this won't be undoable");
+            if(choice)
+            {   
+                //if choose yes, this code will run 
+                //get the data to object
+                Staff newStaff = event.getRowValue();
+                newStaff.setName1(event.getNewValue());
+                //refresh when done
+                table1.refresh();
+            }
+            else 
+                //when the user hit No button
+                //allow the user to see the unchanged right away
+                table1.refresh();
+
+        });
+
+        workunit1Column.setOnEditCommit( event ->{ 
+
+            boolean choice = AppearBox.choice("Edit alert", "Are you sure, this won't be undoable");
+            if(choice){   
+                
+                Staff newStaff = event.getRowValue();
+                newStaff.setWorku1(event.getNewValue());
+                table1.refresh();
+            }
+            else 
+                table1.refresh();
+        });
+
+        basicsal1Column.setOnEditCommit( event ->{ 
+
+            boolean choice = AppearBox.choice("Edit alert", "Are you sure, this won't be undoable");
+            if(choice){   
+                
+                Staff newStaff = event.getRowValue();
+                newStaff.setBasic1(event.getNewValue());
+                table1.refresh();
+            }
+            else 
+                table1.refresh();
+        });
+
+       basicsal1Column.setOnEditCommit( event ->{ 
+
+            boolean choice = AppearBox.choice("Edit alert", "Are you sure, this won't be undoable");
+            if(choice){   
+                
+                Staff newStaff = event.getRowValue();
+                newStaff.setBonus1(event.getNewValue());
+                table1.refresh();
+            }
+            else 
+                table1.refresh();
+        });
+
+        workingdayColumn.setOnEditCommit( event ->{ 
+
+            boolean choice = AppearBox.choice("Edit alert", "Are you sure, this won't be undoable");
+            if(choice){   
+                
+                Staff newStaff = event.getRowValue();
+                newStaff.setDay1(event.getNewValue());
+                table1.refresh();
+            }
+            else 
+                table1.refresh();
+        });
+
+
+        //wrap the whole ObservableList inside a FilteredList object,initialy keeping the list
         FilteredList<Staff> filteredData = new FilteredList<>(staffList, b -> true);
 
+        //set the filter predicate whenever there is change in the search textfield
         searchName.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(Staff ->{
+            filteredData.setPredicate(staff ->{
                 if(newValue == null|| newValue.isEmpty()){
-                    return true;
+                    return true; //keeping the list the way it is
                 }
                 String lowerCaseFilter = newValue.toLowerCase();
 
-                if (Staff.getName1().toLowerCase().indexOf(lowerCaseFilter) != -1){
-                    return true;
+                if (staff.getName1().toLowerCase().indexOf(lowerCaseFilter) != -1){
+                    return true; //only the found are in the table view
                 }
                 else
-                return false;
+                return false; // nothing will be appeared
                 
             });
         });
         searchWorku.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(Staff ->{
+            filteredData.setPredicate(staff ->{
                 if(newValue == null|| newValue.isEmpty()){
                     return true;
                 }
                 String lowerCaseFilter = newValue.toLowerCase();
 
-                if (Staff.getWorku1().toLowerCase().indexOf(lowerCaseFilter) != -1){
+                if (staff.getWorku1().toLowerCase().indexOf(lowerCaseFilter) != -1){
                     return true;
                 }
                 else
@@ -131,13 +232,13 @@ public class MainScene implements Initializable{
             });
         });
         searchCoeffi.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(Staff ->{
+            filteredData.setPredicate(staff ->{
                 if(newValue == null|| newValue.isEmpty()){
                     return true;
                 }
                 String lowerCaseFilter = newValue.toLowerCase();
 
-                if (String.valueOf(Staff.getBasic1()).indexOf(lowerCaseFilter) != -1){
+                if (String.valueOf(staff.getBasic1()).indexOf(lowerCaseFilter) != -1){
                     return true;
                 }
                 else
@@ -145,10 +246,15 @@ public class MainScene implements Initializable{
                 
             });
         });
-        SortedList<Staff> sortedData = new SortedList<>(filteredData);
-        sortedData.comparatorProperty().bind(table1.comparatorProperty());
-        table1.setItems(sortedData);
 
+        //wrap the FilteredList inside SortedList, help sorted out the object
+        SortedList<Staff> sortedData = new SortedList<>(filteredData);
+
+        //compare to the table, and bind both comparator
+        sortedData.comparatorProperty().bind(table1.comparatorProperty());
+
+        //add sorted and filtered data to the table
+        table1.setItems(sortedData);
 
     }
 
@@ -164,7 +270,12 @@ public class MainScene implements Initializable{
         newStaff.setSalary(money1);
         newStaff.setCategori1("Teacher");
         staffList.add(newStaff);
-        n++;
+        nameText.clear();
+        basicsalText.clear();
+        bonussalText.clear();
+        daysText.clear();
+        workunitText.clear();
+        
     }
 
     public void addStaff (ActionEvent e)
@@ -179,7 +290,11 @@ public class MainScene implements Initializable{
         newStaff.setSalary(money2);
         newStaff.setCategori1("Staff");
         staffList.add(newStaff);
-        m++;
+        nameText.clear();
+        basicsalText.clear();
+        bonussalText.clear();
+        daysText.clear();
+        workunitText.clear();
     }
 
     public void delete (ActionEvent e)

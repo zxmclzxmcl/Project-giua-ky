@@ -1,4 +1,6 @@
-public class Staff {
+import java.io.Serializable;
+
+public class Staff implements Serializable{
     private double bonus1, basic1;
     private String name1;
     private String worku1;
@@ -15,8 +17,8 @@ public class Staff {
         this.categori1 = categori1;
     }
     
-    public Staff(){
-    }
+    public Staff(){}
+
     public String getName1(){
         return name1;
     }
