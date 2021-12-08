@@ -18,7 +18,7 @@
             <TableColumn fx:id="basicsal1Column" prefWidth="128.79998779296875" text="Coefficient Salary" />
             <TableColumn fx:id="bonussal1Column" prefWidth="160.00003051757812" text="Bonus Salary" />
             <TableColumn fx:id="workingdayColumn" prefWidth="155.20001220703125" text="Lessons / Working days" />
-            <TableColumn fx:id="salaryColumn" prefWidth="184.79998779296875" text="Salary (Thousand VND)" />
+            <TableColumn fx:id="salaryColumn" prefWidth="184.79998779296875" text="Salary (VND)" />
             <TableColumn fx:id="categoriColumn" prefWidth="197.5999755859375" text="Categorization" />
         </columns>
       </TableView>

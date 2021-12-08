@@ -44,7 +44,7 @@ public class MainScene implements Initializable{
     private TableColumn<Staff, Double> bonussal1Column;
 
     @FXML
-    private TableColumn<Staff, Double> salaryColumn;
+    private TableColumn<Staff, Long> salaryColumn;
 
     @FXML
     private TableColumn<Staff, String> categoriColumn;
@@ -103,7 +103,7 @@ public class MainScene implements Initializable{
         basicsal1Column.setCellValueFactory(new PropertyValueFactory<Staff, Double>("basic1"));
         bonussal1Column.setCellValueFactory(new PropertyValueFactory<Staff, Double>("bonus1"));
         workingdayColumn.setCellValueFactory(new PropertyValueFactory<Staff, Integer>("day1"));
-        salaryColumn.setCellValueFactory(new PropertyValueFactory<Staff, Double>("salary"));
+        salaryColumn.setCellValueFactory(new PropertyValueFactory<Staff, Long>("salary"));
         categoriColumn.setCellValueFactory(new PropertyValueFactory<Staff, String>("categori1"));
         
         table1.setItems(staffList);
@@ -178,12 +178,12 @@ public class MainScene implements Initializable{
         newStaff.setDay1(Integer.parseInt(daysText.getText()));
         newStaff.setCategori1(staffCate.getValue());
         staffList.add(newStaff);
-        double money;
+        Long money;
         if(newStaff.getCategori1() == "Teacher"){   
-            money = (newStaff.getBasic1() * 750000 + newStaff.getBonus1() + newStaff.getDay1() * 45000)/1000;
+            money = (long) ((newStaff.getBasic1() * 750000 + newStaff.getBonus1() + newStaff.getDay1() * 45000)/1000);
         }
         else{
-            money = (newStaff.getBasic1() * 750000 + newStaff.getBonus1() + newStaff.getDay1() * 200000)/1000;
+            money = (long) ((newStaff.getBasic1() * 750000 + newStaff.getBonus1() + newStaff.getDay1() * 200000)/1000);
         }
         newStaff.setSalary(money);
         /*nameText.clear();
@@ -243,13 +243,13 @@ public class MainScene implements Initializable{
         newStaff.setDay1(Integer.parseInt(daysText.getText()));
         if (selected1.getCategori1() == "Teacher")
         {
-            double money1 = (newStaff.getBasic1() * 750000 + newStaff.getBonus1() + newStaff.getDay1() * 45000)/1000;
+            Long money1 = (long) (newStaff.getBasic1() * 750000 + newStaff.getBonus1() + newStaff.getDay1() * 45000);
             newStaff.setSalary(money1);
             newStaff.setCategori1("Teacher");
         }
         else 
         {
-            double money2 = (newStaff.getBasic1() * 750000 + newStaff.getBonus1() + newStaff.getDay1() * 200000)/1000;
+            Long money2 = (long) (newStaff.getBasic1() * 750000 + newStaff.getBonus1() + newStaff.getDay1() * 200000);
             newStaff.setSalary(money2);
             newStaff.setCategori1("Staff");
         }
