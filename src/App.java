@@ -17,6 +17,7 @@ public class App extends Application
         //load the fxml file of the GUI
         Parent root = FXMLLoader.load(getClass().getResource("Tableview.fxml"));
         Scene scene = new Scene(root);
+
         
         primaryStage.setTitle("Staff Management Program");
         //set the initial scene as scene

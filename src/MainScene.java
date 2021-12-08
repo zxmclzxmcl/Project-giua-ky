@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -21,10 +22,13 @@ import javafx.stage.*;
 
 
 public class MainScene implements Initializable{
+    //declare a table view for Staff object
     @FXML
     //this will declare a table for Staff object
     private TableView<Staff> table1;
 
+    /* For each and every column, declare a TableColumn<Class_name,Attribute_datatype>
+    this will create a column for a property each */
     @FXML
     //creat different column display the method
     private TableColumn<Staff, Integer> workingdayColumn;
@@ -42,16 +46,18 @@ public class MainScene implements Initializable{
     private TableColumn<Staff, Double> bonussal1Column;
 
     @FXML
-    private TableColumn<Staff, Double> salarycolumn;
+    private TableColumn<Staff, Long> salaryColumn;
 
     @FXML
     private TableColumn<Staff, String> categoriColumn;
-    
-    //create an ObservableList for the Staff object
+
+    /* Create an ObservabelList<Class_name> object, this will act as a List that 
+    store the object of the Class, including its attribute and method */
     private ObservableList<Staff> staffList;
     int index = -1;
     
-    //create Texfield for user to enter their input
+    //in the GUI, TextField will be the place you input your data
+
     @FXML
     private TextField daysText;
 
@@ -86,12 +92,13 @@ public class MainScene implements Initializable{
     //create a choice box for enhanced categorizing
     ChoiceBox<String> staffCate;
 
+    //This method is gonna be called whenever the view load : App.java 
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {   //this is for testing only
         staffList = FXCollections.observableArrayList(
                 new Staff( "Chau","Lop 1-A",3, 100000, 45, "Teacher"),
-                new Staff( "Duc","Lop 2-B",4, 200000, 40, "Staff")
+                new Staff( "Duc","Lop 2-B",4, 200000, 40, "Adminstrative Staff")
         );
 
         //link each column data to different attribute of object
@@ -100,16 +107,23 @@ public class MainScene implements Initializable{
         basicsal1Column.setCellValueFactory(new PropertyValueFactory<Staff, Double>("basic1"));
         bonussal1Column.setCellValueFactory(new PropertyValueFactory<Staff, Double>("bonus1"));
         workingdayColumn.setCellValueFactory(new PropertyValueFactory<Staff, Integer>("day1"));
-        salarycolumn.setCellValueFactory(new PropertyValueFactory<Staff, Double>("salary"));
+        salaryColumn.setCellValueFactory(new PropertyValueFactory<Staff, Long>("salary"));
         categoriColumn.setCellValueFactory(new PropertyValueFactory<Staff, String>("categori1"));
         
+
         //set the item: the ObservableList of Staff, for display
         table1.setItems(staffList);
+        //set the table editable
+        staffCate.getItems().addAll("Teacher", "Adminstrative Staff");
+        staffCate.getSelectionModel().select(0);
+
 
         //set the item for choice box
         staffCate.getItems().addAll("Teacher", "Staff");
         staffCate.getSelectionModel().select(0);
-
+      
+        table1.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        
         //wrap the ObservabelList in a FilteredList, initialy display all data
         FilteredList<Staff> filteredData = new FilteredList<>(staffList, b -> true);
 
@@ -174,6 +188,7 @@ public class MainScene implements Initializable{
 
     }
 
+
     // the actual add method
     public void add (ActionEvent e){
         
@@ -216,6 +231,7 @@ public class MainScene implements Initializable{
         newStaff.setBasic1(Double.parseDouble(basicsalText.getText()));
         newStaff.setBonus1(Double.parseDouble(bonussalText.getText()));
         newStaff.setDay1(Integer.parseInt(daysText.getText()));
+
         double money1 = newStaff.getBasic1() * 750000 + newStaff.getBonus1() + newStaff.getDay1() * 45000;
         newStaff.setSalary(money1);
         newStaff.setCategori1("Teacher");
@@ -255,6 +271,7 @@ public class MainScene implements Initializable{
    
     // connected to the "Delete Imformation"  button, Tableview.fxml: 29
     public void delete (ActionEvent e)
+
     {   
         //on selected and after choose the delete button, remove the selected row out of the table 
         Staff selected1 = table1.getSelectionModel().getSelectedItem();
@@ -266,13 +283,18 @@ public class MainScene implements Initializable{
     //stop selecting the row when click from the outside
     void clearSelected1(MouseEvent event)
     {
+        table1.getSelectionModel().clearSelection();
+    }
+
+    @FXML
+    void clearSelected2(ActionEvent event) {
         nameText.clear();
-        daysText.clear();
         workunitText.clear();
         basicsalText.clear();
         bonussalText.clear();
-        table1.getSelectionModel().clearSelection();
+        daysText.clear();
     }
+
 
     @FXML
     // choose a row, this will also display all the value into the TextField, allow for fix() method to work
@@ -307,13 +329,13 @@ public class MainScene implements Initializable{
         newStaff.setDay1(Integer.parseInt(daysText.getText()));
         if (selected1.getCategori1() == "Teacher")
         {
-            double money1 = newStaff.getBasic1() * 750000 + newStaff.getBonus1() + newStaff.getDay1() * 45000;
+            Long money1 = (long) (newStaff.getBasic1() * 750000 + newStaff.getBonus1() + newStaff.getDay1() * 45000);
             newStaff.setSalary(money1);
             newStaff.setCategori1("Teacher");
         }
         else 
         {
-            double money2 = newStaff.getBasic1() * 750000 + newStaff.getBonus1() + newStaff.getDay1() * 200000;
+            Long money2 = (long) (newStaff.getBasic1() * 750000 + newStaff.getBonus1() + newStaff.getDay1() * 200000);
             newStaff.setSalary(money2);
             newStaff.setCategori1("Staff");
         }

@@ -3,7 +3,7 @@ public class Staff {
     private String name1;
     private String worku1;
     private int day1;
-    private double salary1;
+    private long salary1;
     private String categori1;
     
     public Staff(String name1, String worku1, double basic1, double bonus1, int day1, String categori1){
@@ -38,8 +38,8 @@ public class Staff {
     public double getBonus1(){
         return bonus1;
     }
-    public void setBonus1(double d){
-        this.bonus1 = d;
+    public void setBonus1(double bonus1){
+        this.bonus1 = bonus1;
     }
     public int getDay1(){
         return day1;
@@ -47,10 +47,10 @@ public class Staff {
     public void setDay1(int day1){
         this.day1 = day1;
     }
-    public double getSalary(){
+    public long getSalary(){
         return salary1;
     }
-    public void setSalary(double salary1){
+    public void setSalary(Long salary1){
         this.salary1 = salary1;
     }
 
