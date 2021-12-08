@@ -11,6 +11,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -20,9 +22,12 @@ import javafx.stage.*;
 
 
 public class MainScene implements Initializable{
+    //declare a table view for Staff object
     @FXML
     private TableView<Staff> table1;
 
+    /* For each and every column, declare a TableColumn<Class_name,Attribute_datatype>
+    this will create a column for a property each */
     @FXML
     private TableColumn<Staff, Integer> workingdayColumn;
     
@@ -39,16 +44,17 @@ public class MainScene implements Initializable{
     private TableColumn<Staff, Double> bonussal1Column;
 
     @FXML
-    private TableColumn<Staff, Double> salarycolumn;
+    private TableColumn<Staff, Double> salaryColumn;
 
     @FXML
     private TableColumn<Staff, String> categoriColumn;
 
+    /* Create an ObservabelList<Class_name> object, this will act as a List that 
+    store the object of the Class, including its attribute and method */
     private ObservableList<Staff> staffList;
     int index = -1;
-    int n=0;
-    int m=0;
     
+    //in the GUI, TextField will be the place you input your data
     @FXML
     private TextField daysText;
 
@@ -79,12 +85,17 @@ public class MainScene implements Initializable{
     @FXML
     private TextField searchWorku;
 
+    @FXML
+    //create a choice box for enhanced categorizing
+    ChoiceBox<String> staffCate;
+
+    //This method is gonna be called whenever the view load : App.java 
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
         staffList = FXCollections.observableArrayList(
                 new Staff( "Chau","Lop 1-A",3, 100000, 45, "Teacher"),
-                new Staff( "Duc","Lop 2-B",4, 200000, 40, "Staff")
+                new Staff( "Duc","Lop 2-B",4, 200000, 40, "Adminstrative Staff")
         );
 
         name1Column.setCellValueFactory(new PropertyValueFactory<Staff, String>("name1"));
@@ -92,10 +103,15 @@ public class MainScene implements Initializable{
         basicsal1Column.setCellValueFactory(new PropertyValueFactory<Staff, Double>("basic1"));
         bonussal1Column.setCellValueFactory(new PropertyValueFactory<Staff, Double>("bonus1"));
         workingdayColumn.setCellValueFactory(new PropertyValueFactory<Staff, Integer>("day1"));
-        salarycolumn.setCellValueFactory(new PropertyValueFactory<Staff, Double>("salary"));
+        salaryColumn.setCellValueFactory(new PropertyValueFactory<Staff, Double>("salary"));
         categoriColumn.setCellValueFactory(new PropertyValueFactory<Staff, String>("categori1"));
+        
         table1.setItems(staffList);
+        //set the table editable
+        staffCate.getItems().addAll("Teacher", "Adminstrative Staff");
+        staffCate.getSelectionModel().select(0);
 
+        table1.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         //huong dan search bar https://www.youtube.com/watch?v=FeTrcNBVWtg&t=541s
 
         FilteredList<Staff> filteredData = new FilteredList<>(staffList, b -> true);
@@ -152,7 +168,7 @@ public class MainScene implements Initializable{
 
     }
 
-    public void addTeacher (ActionEvent e)
+    public void add (ActionEvent e)
     {
         Staff newStaff = new Staff();
         newStaff.setName1(nameText.getText());
@@ -160,45 +176,44 @@ public class MainScene implements Initializable{
         newStaff.setBasic1(Double.parseDouble(basicsalText.getText()));
         newStaff.setBonus1(Double.parseDouble(bonussalText.getText()));
         newStaff.setDay1(Integer.parseInt(daysText.getText()));
-        double money1 = newStaff.getBasic1() * 750000 + newStaff.getBonus1() + newStaff.getDay1() * 45000;
-        newStaff.setSalary(money1);
-        newStaff.setCategori1("Teacher");
+        newStaff.setCategori1(staffCate.getValue());
         staffList.add(newStaff);
-        n++;
+        double money;
+        if(newStaff.getCategori1() == "Teacher"){   
+            money = (newStaff.getBasic1() * 750000 + newStaff.getBonus1() + newStaff.getDay1() * 45000)/1000;
+        }
+        else{
+            money = (newStaff.getBasic1() * 750000 + newStaff.getBonus1() + newStaff.getDay1() * 200000)/1000;
+        }
+        newStaff.setSalary(money);
+        /*nameText.clear();
+        basicsalText.clear();
+        bonussalText.clear();
+        daysText.clear();*/
     }
 
-    public void addStaff (ActionEvent e)
-    {
-        Staff newStaff = new Staff();
-        newStaff.setName1(nameText.getText());
-        newStaff.setWorku1(workunitText.getText());
-        newStaff.setBasic1(Double.parseDouble(basicsalText.getText()));
-        newStaff.setBonus1(Double.parseDouble(bonussalText.getText()));
-        newStaff.setDay1(Integer.parseInt(daysText.getText()));
-        double money2 = newStaff.getBasic1() * 750000 + newStaff.getBonus1() + newStaff.getDay1() * 200000;
-        newStaff.setSalary(money2);
-        newStaff.setCategori1("Staff");
-        staffList.add(newStaff);
-        m++;
-    }
 
     public void delete (ActionEvent e)
     {
-        Staff selected1 = table1.getSelectionModel().getSelectedItem();
-        staffList.remove(selected1);
+        staffList.removeAll(table1.getSelectionModel().getSelectedItems());
         table1.getSelectionModel().clearSelection();
     }
     
     @FXML
     void clearSelected1(MouseEvent event)
     {
+        table1.getSelectionModel().clearSelection();
+    }
+
+    @FXML
+    void clearSelected2(ActionEvent event) {
         nameText.clear();
-        daysText.clear();
         workunitText.clear();
         basicsalText.clear();
         bonussalText.clear();
-        table1.getSelectionModel().clearSelection();
+        daysText.clear();
     }
+
 
     @FXML
     void getSelected1(MouseEvent event)
@@ -228,13 +243,13 @@ public class MainScene implements Initializable{
         newStaff.setDay1(Integer.parseInt(daysText.getText()));
         if (selected1.getCategori1() == "Teacher")
         {
-            double money1 = newStaff.getBasic1() * 750000 + newStaff.getBonus1() + newStaff.getDay1() * 45000;
+            double money1 = (newStaff.getBasic1() * 750000 + newStaff.getBonus1() + newStaff.getDay1() * 45000)/1000;
             newStaff.setSalary(money1);
             newStaff.setCategori1("Teacher");
         }
         else 
         {
-            double money2 = newStaff.getBasic1() * 750000 + newStaff.getBonus1() + newStaff.getDay1() * 200000;
+            double money2 = (newStaff.getBasic1() * 750000 + newStaff.getBonus1() + newStaff.getDay1() * 200000)/1000;
             newStaff.setSalary(money2);
             newStaff.setCategori1("Staff");
         }

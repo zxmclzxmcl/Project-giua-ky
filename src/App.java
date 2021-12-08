@@ -11,9 +11,11 @@ public class App extends Application
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("Tableview.fxml"));
         Scene scene = new Scene(root);
-        
+        //set title of the scene
         stage.setTitle("Staff Management Program");
+        //set scene will show when open the program
         stage.setScene(scene);
+        //show the scene
         stage.show();
     }
 

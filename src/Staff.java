@@ -38,8 +38,8 @@ public class Staff {
     public double getBonus1(){
         return bonus1;
     }
-    public void setBonus1(double d){
-        this.bonus1 = d;
+    public void setBonus1(double bonus1){
+        this.bonus1 = bonus1;
     }
     public int getDay1(){
         return day1;
